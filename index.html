@@ -10,88 +10,231 @@
     />
   </head>
   <body>
-    <div class="container my-3" style="max-width: 600px">
+    <div class="container my-3" style="max-width: 1200px">
       <h3>Database</h3>
-
       <div class="card mt-3">
         <div class="card-header">Tìm bản ghi trong database</div>
         <div class="card-body">
           <div class="input-group input-group-sm">
-            <button class="btn btn-sm btn-primary" onclick="getAllData()">Lấy tất cả dữ liệu</button>
-
-            <input type="text" id="get-id" class="form-control ml-2" placeholder="Id">
+            <input
+              type="text"
+              id="get-id"
+              class="form-control ml-2"
+              placeholder="Request_Id"
+            />
             <div class="input-group-append">
-              <button class="btn btn-sm btn-primary" onclick="getDataById()">Get by Id</button>
+              <button class="btn btn-sm btn-primary" onclick="getDataById()">
+                Tìm kiếm
+              </button>
             </div>
+            <button class="btn btn-sm btn-primary ml-2" onclick="getAllData()">
+              Lấy tất cả dữ liệu
+            </button>
+            <button
+              class="btn btn-sm btn-warning ml-2"
+              onclick="clearGetOutput()"
+            >
+              Xoá log
+            </button>
+          </div>
 
-            <button class="btn btn-sm btn-warning ml-2" onclick="clearGetOutput()">Xoá log</button>
-          </div>   
-          
           <div id="getResult"></div>
         </div>
 
         <div class="card mt-3">
-            <div class="card-header">Xoá bản ghi trong database</div>
-            <div class="card-body">
-              <div class="input-group input-group-sm">
-    
-                <input type="text" id="delete-id" class="form-control ml-2" placeholder="request_id">
-                <div class="input-group-append">
-                  <button class="btn btn-sm btn-danger" onclick="deleteDataById()">Xoá</button>
-                </div>
-    
-                <button class="btn btn-sm btn-warning ml-2" onclick="clearDeleteOutput()">Xoá Log</button>
-              </div>    
-              
-              <div id="deleteResult"></div>      
-            </div>
-          </div>
+          <div class="card-header">Xoá bản ghi trong database</div>
+          <div class="card-body">
+            <div class="input-group input-group-sm">
+              <input
+                type="text"
+                id="delete-id"
+                class="form-control ml-2"
+                placeholder="request_id"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-sm btn-danger"
+                  onclick="deleteDataById()"
+                >
+                  Xoá
+                </button>
+              </div>
 
-          <div class="card mt-3">
-            <div class="card-header">Tạo một bản ghi trong database</div>
-            <div class="card-body">
-              <div class="form-group">
-                <input type="text" class="form-control" id="request_id_1" placeholder="Request_id">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" id="task_id_1" placeholder="Task_id">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" id="request_1" placeholder="Request">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" id="response_1" placeholder="Response">
-              </div>
-              <button class="btn btn-sm btn-primary" onclick="postData()">Tạo Data</button>
-              <button class="btn btn-sm btn-warning" onclick="clearPostOutput()">Xoá log</button>
-    
-              <div id="postResult"></div>
+              <button
+                class="btn btn-sm btn-warning ml-2"
+                onclick="clearDeleteOutput()"
+              >
+                Xoá Log
+              </button>
             </div>
+
+            <div id="deleteResult"></div>
           </div>
+        </div>
+
+        <div class="card-header">Tạo một bản ghi trong database</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="request_id_1"
+              placeholder="Request_id"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="task_id_1"
+              placeholder="Task_id"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="request_1"
+              placeholder="Request"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="response_1"
+              placeholder="Response"
+            />
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="postData()">
+            Tạo Data
+          </button>
+          <button class="btn btn-sm btn-warning" onclick="clearPostOutput()">
+            Xoá log
+          </button>
+
+          <div id="postResult"></div>
+        </div>
       </div>
-      
-      <!-- <br>
+
+      <br />
+      <h3>Upload file</h3>
+      <div class="card mt-3">
+        <div class="card-header">Upload File</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input type="file" id="files" name="files" multiple><br><br>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="">
+            Tải lên
+          </button>
+          <button class="btn btn-sm btn-primary" onclick="getAllPathFile()">
+            Tất cả các file hiện có
+          </button>
+          <button class="btn btn-sm btn-warning" onclick="clearListFile()">
+            Xoá log
+          </button>
+
+          <div id="uploadFileResult"></div>
+        </div>
+      </div>
+
+
+      <br />
       <h3>File MMl</h3>
 
       <div class="card mt-3">
-          <div class="card mt-3">
-            <div class="card-header">File pcrf</div>
-            <div class="card-body">
-              <div class="form-group">
-                <input type="text" class="form-control" id="path_1" placeholder="Đường đẫn file pcrf">
-              </div>
-              <button class="btn btn-sm btn-primary" onclick="postDataPcrf()">Đọc và Cấp nhập</button>
-              <button class="btn btn-sm btn-warning" onclick="clearPostOutput()">Xoá log</button>
-    
-              <div id="postResultPcrf"></div>
-            </div>
+
+        <div class="card-header">File Pcrf</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="path_1"
+              placeholder="Đường đẫn file pcrf"
+            />
           </div>
-      </div> -->
-   
+          <button class="btn btn-sm btn-primary" onclick="postDataPcrf()">
+            Đọc và Cập nhập
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            onclick="clearPostPcrfOutput()"
+          >
+            Xoá log
+          </button>
 
+          <div id="postResultPcrf"></div>
+        </div>
 
-   
+        <div class="card-header">File Billing</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="path_2"
+              placeholder="Đường đẫn file billing"
+            />
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="postDataBilling()">
+            Đọc và Cập nhập
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            onclick="clearPostBillingOutput()"
+          >
+            Xoá log
+          </button>
 
+          <div id="postResultBilling"></div>
+        </div>
+
+        <div class="card-header">File Ingw</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="path_3"
+              placeholder="Đường đẫn file Ingw"
+            />
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="postDataIngw()">
+            Đọc và Cập nhập
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            onclick="clearPostIngwOutput()"
+          >
+            Xoá log
+          </button>
+
+          <div id="postResultIngw"></div>
+        </div>
+
+        <div class="card-header">File Mbf</div>
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="path_4"
+              placeholder="Đường đẫn file Mbf"
+            />
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="postDataMbf()">
+            Đọc và Cập nhập
+          </button>
+          <button class="btn btn-sm btn-warning" onclick="clearPostMbfOutput()">
+            Xoá log
+          </button>
+
+          <div id="postResultMbf"></div>
+        </div>
+
+      </div>
 
     </div>
 

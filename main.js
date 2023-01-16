@@ -8,6 +8,7 @@ function htmlizeResponse(res) {
   );
 }
 
+// Database
 async function getAllData() {
   let resultElement = document.getElementById("getResult");
   resultElement.innerHTML = "";
@@ -25,7 +26,7 @@ async function getAllData() {
     const result = {
       data: data,
     };
-
+    console.log(result);
     resultElement.innerHTML = htmlizeResponse(result);
   } catch (err) {
     resultElement.innerHTML = htmlizeResponse(err.message);
@@ -60,24 +61,20 @@ async function getDataById() {
   }
 }
 async function deleteDataById() {
-    let resultElement = document.getElementById("deleteResult");
-    resultElement.innerHTML = "";
-  
-    const id = document.getElementById("delete-id").value;
-  
-    try {
-      const res = await fetch(`${baseURL}/delete/?requestId=${id}`, { method: "delete" });
-  
-      const data = "Xoá thành công";
-  
-      const result = {
-        data: data,
-      };
-  
-      resultElement.innerHTML = htmlizeResponse(result);
-    } catch (err) {
-      resultElement.innerHTML = htmlizeResponse(err.message);
-    }
+  let resultElement = document.getElementById("deleteResult");
+  resultElement.innerHTML = "";
+
+  const id = document.getElementById("delete-id").value;
+
+  try {
+    const res = await fetch(`${baseURL}/delete/?requestId=${id}`, { method: "delete" });
+
+    const data = await res.json();
+
+    resultElement.innerHTML = htmlizeResponse(data);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
 }
 
 async function postData() {
@@ -125,48 +122,227 @@ async function postData() {
   }
 }
 
-async function postDataPcrf() {
-    let resultElement = document.getElementById("postResultPcrf");
-    resultElement.innerHTML = "";
-  
-    const path = document.getElementById("path_1").value;
-  
-  
-  
-    const postData = {
-      path: path
-    };
-  
-    try {
-      const res = await fetch(`${baseURL}/read-file-pcrf`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": "token-value",
-        },
-        body: JSON.stringify(postData),
-      });
-  
-      if (!res.ok) {
-        const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        throw new Error(message);
-      }
-  
-      const data = await res.json();
-  
-      const result = {
-        data: data,
-      };
-  
-      resultElement.innerHTML = htmlizeResponse(result);
-    } catch (err) {
-      resultElement.innerHTML = htmlizeResponse(err.message);
+// Upload File
+
+async function getAllPathFile() {
+  let resultElement = document.getElementById("uploadFileResult");
+  resultElement.innerHTML = "";
+
+  try {
+    const res = await fetch(`${baseURL}/files`);
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
     }
+
+    const data = await res.json();
+    console.log(data);
+
+    resultElement.innerHTML = htmlizeResponse(data);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
   }
+}
+
+
+async function upload() {
+  let resultElement = document.getElementById("uploadFileResult");
+  resultElement.innerHTML = "";
+
+    let formData = new FormData();
   
+    for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
+      const file = fileList[i];
+    }     
+    
+
+  try {
+    const res = await fetch(`${baseURL}/upload`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "token-value",
+      },
+      body: formData
+    });
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+
+    resultElement.innerHTML = htmlizeResponse(data);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
+}
 
 
 
+//File
+async function postDataPcrf() {
+  let resultElement = document.getElementById("postResultPcrf");
+  resultElement.innerHTML = "";
+
+  const path = document.getElementById("path_1").value;
+
+
+
+  const postData = {
+    path: path
+  };
+
+  try {
+    const res = await fetch(`${baseURL}/read-file-pcrf`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "token-value",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+
+    const result = {
+      data: data,
+    };
+
+    resultElement.innerHTML = htmlizeResponse(result);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
+}
+
+async function postDataBilling() {
+  let resultElement = document.getElementById("postResultBilling");
+  resultElement.innerHTML = "";
+
+  const path = document.getElementById("path_2").value;
+
+
+
+  const postData = {
+    path: path
+  };
+
+  try {
+    const res = await fetch(`${baseURL}/read-file-billing`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "token-value",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+
+    const result = {
+      data: data,
+    };
+
+    resultElement.innerHTML = htmlizeResponse(result);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
+}
+
+async function postDataIngw() {
+  let resultElement = document.getElementById("postResultIngw");
+  resultElement.innerHTML = "";
+
+  const path = document.getElementById("path_3").value;
+
+
+
+  const postData = {
+    path: path
+  };
+
+  try {
+    const res = await fetch(`${baseURL}/read-file-ingw`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "token-value",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+
+    const result = {
+      data: data,
+    };
+
+    resultElement.innerHTML = htmlizeResponse(result);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
+}
+
+
+
+async function postDataMbf() {
+  let resultElement = document.getElementById("postResultMbf");
+  resultElement.innerHTML = "";
+
+  const path = document.getElementById("path_4").value;
+
+
+
+  const postData = {
+    path: path
+  };
+
+  try {
+    const res = await fetch(`${baseURL}/read-file-mbf`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "token-value",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+      const message = `An error has occured: ${res.status} - ${res.statusText}`;
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+
+    const result = {
+      data: data,
+    };
+
+    resultElement.innerHTML = htmlizeResponse(result);
+  } catch (err) {
+    resultElement.innerHTML = htmlizeResponse(err.message);
+  }
+}
+
+
+//Database
 function clearGetOutput() {
   document.getElementById("getResult").innerHTML = "";
 }
@@ -177,4 +353,25 @@ function clearPostOutput() {
 
 function clearDeleteOutput() {
   document.getElementById("deleteResult").innerHTML = "";
+}
+
+//Upload File
+
+function clearListFile() {
+  document.getElementById("uploadFileResult").innerHTML = "";
+}
+
+
+//File
+function clearPostPcrfOutput() {
+  document.getElementById("postResultPcrf").innerHTML = "";
+}
+function clearPostBillingOutput() {
+  document.getElementById("postResultBilling").innerHTML = "";
+}
+function clearPostIngwOutput() {
+  document.getElementById("postResultIngw").innerHTML = "";
+}
+function clearPostMbfOutput() {
+  document.getElementById("postResultMbf").innerHTML = "";
 }
